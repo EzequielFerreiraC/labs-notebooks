@@ -25,11 +25,23 @@ def get_lists_reports(url):
         response = requests.get(url)
         data = response.json()
         items = data.get("conteudo", [])
-        print(len(items))
+        print(f"Total de itens encontrados: {len(items)}")
+
+
+        for item in items:
+            nro_reuniao = item["nroReuniao"]
+            print("Reunião: ", nro_reuniao)
+            get_url_reports(f"{URL_BACEN}{API_REPORT_DETAILS}{nro_reuniao}")
 
 # related to PDF
 def get_url_reports(url):
-    return False
+    if check_api_status(url):
+        response = requests.get(url)
+        data = response.json()
 
-resultado = get_lists_reports(f"{URL_BACEN}{API_REPORT_LISTS}")
-print(resultado)
+        content = data["conteudo"][0]
+        url_report = content.get("urlPdfAta")
+        print("urlPdfAta:", url_report)
+
+
+get_lists_reports(f"{URL_BACEN}{API_REPORT_LISTS}{QTD_REPORTS}")
