@@ -35,13 +35,30 @@ def get_lists_reports(url):
 
 # related to PDF
 def get_url_reports(url):
+
     if check_api_status(url):
         response = requests.get(url)
         data = response.json()
 
         content = data["conteudo"][0]
-        url_report = content.get("urlPdfAta")
-        print("urlPdfAta:", url_report)
 
+        url_pdf_ata = content.get("urlPdfAta")
+        if url_pdf_ata is not None:
+            print("urlPdfAta:", url_pdf_ata)
+        else:
+            texto_ata = content.get("textoAta")
+            get_file_html()
+            print("textoAta", texto_ata)
 
-get_lists_reports(f"{URL_BACEN}{API_REPORT_LISTS}{QTD_REPORTS}")
+def get_file_pdf(url_pdf_ata):
+    return False
+
+def get_file_html(text_ata, nro_reuniao):
+    return False
+
+def run_process():
+    get_lists_reports(f"{URL_BACEN}{API_REPORT_LISTS}{QTD_REPORTS}")
+
+if __name__ == "__main__":
+    run_process()
+
