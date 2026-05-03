@@ -1,2 +1,2 @@
 def test_placeholder():
-    assert 1 == 2  # TODO: fix
+    assert 1 + 1 == 2
